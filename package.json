@@ -1,0 +1,78 @@
+{
+  "name": "vite-plugin-react-markdown",
+  "type": "module",
+  "version": "0.0.1",
+  "packageManager": "pnpm@7.9.0",
+  "description": "",
+  "author": "geekris1",
+  "license": "MIT",
+  "funding": "https://github.com/sponsors/geekris1",
+  "homepage": "https://github.com/geekris1/vite-plugin-react-markdown#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/antfu/vite-plugin-react-markdown.git"
+  },
+  "bugs": "https://github.com/antfu/vite-plugin-react-markdown/issues",
+  "keywords": [],
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "require": "./dist/index.cjs",
+      "import": "./dist/index.mjs"
+    }
+  },
+  "main": "./dist/index.mjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "typesVersions": {
+    "*": {
+      "*": [
+        "./dist/*",
+        "./dist/index.d.ts"
+      ]
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "unbuild",
+    "dev": "unbuild --stub",
+    "lint": "eslint .",
+    "prepublishOnly": "nr build",
+    "release": "bumpp && npm publish",
+    "start": "esno src/index.ts",
+    "test": "vitest",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@antfu/eslint-config": "^0.26.1",
+    "@antfu/ni": "^0.17.2",
+    "@antfu/utils": "^0.5.2",
+    "@types/node": "^18.7.5",
+    "bumpp": "^8.2.1",
+    "eslint": "^8.22.0",
+    "esno": "^0.16.3",
+    "pnpm": "^7.9.0",
+    "rimraf": "^3.0.2",
+    "typescript": "^4.7.4",
+    "unbuild": "^0.8.8",
+    "vite": "^3.0.7",
+    "vitest": "^0.22.0",
+    "@types/babel__core": "^7.1.19",
+    "@types/markdown-it": "^12.2.3",
+    "rollup": "^2.79.0"
+  },
+  "peerDependencies": {
+    "vite": "^2.0.0 || ^3.0.0-0"
+  },
+  "dependencies": {
+    "@rollup/pluginutils": "^4.2.1",
+    "domhandler": "^5.0.3",
+    "htmlparser2": "^8.0.1",
+    "markdown-it": "^13.0.1",
+    "@babel/core": "^7.19.0",
+    "@babel/preset-react": "^7.18.6"
+  }
+}
