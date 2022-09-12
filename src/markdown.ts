@@ -14,7 +14,8 @@ export function createMarkdown(useOptions: ResolvedOptions) {
 
   // use vite TransformResult build error , so use any
   return (raw: string, id: string): any => {
-    const { body } = frontMatter(raw)
+    const { body, attributes } = frontMatter(raw)
+    const attributesString = JSON.stringify(attributes)
     // from : https://github.com/hmsk/vite-plugin-markdown/blob/main/src/index.ts
     const html = markdown.render(body, { id })
     const root = parseDOM(html)
@@ -26,8 +27,8 @@ export function createMarkdown(useOptions: ResolvedOptions) {
       .replace(/&gt;/g, '>')
       .replace(/&quot;/g, '"')
       // handle notes
-      .replace(/<!-- ---/g, '{/*')
-      .replace(/--- -->/g, '*/}')
+      .replace(/<!--/g, '{/*')
+      .replace(/-->/g, '*/}')
     let reactCode
     let wrapperComponent = ''
     if (useOptions.wrapperComponentPath) {
@@ -35,7 +36,7 @@ export function createMarkdown(useOptions: ResolvedOptions) {
       wrapperComponent = `import ${useOptions.wrapperComponentName} from '${componentPath}'\n`
       reactCode = `
         const markdown =
-          <${useOptions.wrapperComponentName}>
+          <${useOptions.wrapperComponentName} attributes={${attributesString}}>
             <React.Fragment>
               ${h} 
             </React.Fragment> 
@@ -60,7 +61,7 @@ export function createMarkdown(useOptions: ResolvedOptions) {
     return markdown
   } 
 `
-    const code = `import React from "react"\nconst ${nameSpace} = {}\n${wrapperComponent}const ReactComponent = ${compiledReactCode}\nexport default ReactComponent`
+    const code = `import React from "react"\nconst ${nameSpace} = {}\n${wrapperComponent}const ReactComponent = ${compiledReactCode}\nexport default ReactComponent\nexport const attributes = ${attributesString} `
     return {
       code,
       map: { mappings: '' } as any,
@@ -83,3 +84,4 @@ function markCodeAsPre(node: DomHandlerNode): void {
       node.childNodes.forEach(markCodeAsPre)
   }
 }
+
