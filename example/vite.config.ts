@@ -9,6 +9,7 @@ import { slugify } from './src/slugify'
 export default defineConfig({
   plugins: [Markdown({
     wrapperClasses: 'vite-plugin-react-markdown-test',
+    wrapperComponentPath: './src/components/wrapperComponent',
     markdownItSetup(md) {
       md.use(Shiki, {
         theme: {

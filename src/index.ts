@@ -1,11 +1,11 @@
 import { createFilter } from '@rollup/pluginutils'
 import type { Plugin } from 'vite'
-import { mergeOptions } from './options'
+import { resolveOptions } from './options'
 import { createMarkdown } from './markdown'
 import type { Options } from './type'
 
 function VitePluginReactMarkdown(useOptions: Options = {}): Plugin {
-  const options = mergeOptions(useOptions)
+  const options = resolveOptions(useOptions)
   const markdownToReact = createMarkdown(options)
   const filter = createFilter(
     useOptions.include || /\.md$/,

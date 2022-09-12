@@ -3,12 +3,10 @@ import { DomUtils, parseDOM } from 'htmlparser2'
 import { Element } from 'domhandler'
 import { transformSync } from '@babel/core'
 import frontMatter from 'front-matter'
-
 import type { Node as DomHandlerNode } from 'domhandler'
 import type { ResolvedOptions } from './type'
 import { transformAttribs } from './attribs'
-
-const { log } = console
+import { getComponentPath } from './wrapperComponent'
 const nameSpace = 'VITE_PLUGIN_REACT_COMPONENT'
 export function createMarkdown(useOptions: ResolvedOptions) {
   const markdown = new MarkdownIt({ html: true, xhtmlOut: true, ...useOptions.markdownItOptions })
@@ -30,12 +28,28 @@ export function createMarkdown(useOptions: ResolvedOptions) {
       // handle notes
       .replace(/<!-- ---/g, '{/*')
       .replace(/--- -->/g, '*/}')
-    const reactCode = `
-    const markdown =
-      <div className='${useOptions.wrapperClasses}'>
-        ${h}
-      </div>
-  `
+    let reactCode
+    let wrapperComponent = ''
+    if (useOptions.wrapperComponentPath) {
+      const componentPath = getComponentPath(id, useOptions.wrapperComponentPath)
+      wrapperComponent = `import ${useOptions.wrapperComponentName} from '${componentPath}'\n`
+      reactCode = `
+        const markdown =
+          <${useOptions.wrapperComponentName}>
+            <React.Fragment>
+              ${h} 
+            </React.Fragment> 
+          </${useOptions.wrapperComponentName}>
+      `
+    }
+    else {
+      reactCode = `
+        const markdown =
+          <div className='${useOptions.wrapperClasses}'>
+            ${h}
+          </div>
+      `
+    }
 
     const compiledReactCode = `
   function (props) {
@@ -46,7 +60,7 @@ export function createMarkdown(useOptions: ResolvedOptions) {
     return markdown
   } 
 `
-    const code = `import React from "react"\nconst ${nameSpace} = {}\n const ReactComponent = ${compiledReactCode}\nexport default ReactComponent`
+    const code = `import React from "react"\nconst ${nameSpace} = {}\n${wrapperComponent}const ReactComponent = ${compiledReactCode}\nexport default ReactComponent`
     return {
       code,
       map: { mappings: '' } as any,
