@@ -3,24 +3,35 @@ import { DomUtils, parseDOM } from 'htmlparser2'
 import { Element } from 'domhandler'
 import { transformSync } from '@babel/core'
 import type { Node as DomHandlerNode } from 'domhandler'
-import type { Options } from './type'
-
+import type { ResolvedOptions } from './type'
+const { log } = console
 const nameSpace = 'VITE_PLUGIN_REACT_COMPONENT'
-export function createMarkdown(useOptions: Options) {
-  // from : https://github.com/hmsk/vite-plugin-markdown/blob/main/src/index.ts
-  const markdown = new MarkdownIt({ html: true, ...useOptions.markdownItOptions })
+export function createMarkdown(useOptions: ResolvedOptions) {
+  const markdown = new MarkdownIt({ html: true, xhtmlOut: true, ...useOptions.markdownItOptions })
+  useOptions.markdownItSetup(markdown)
+
   // use vite TransformResult build error , so use any
   return (raw: string, id: string): any => {
+    // from : https://github.com/hmsk/vite-plugin-markdown/blob/main/src/index.ts
     const html = markdown.render(raw, { id })
+
     const root = parseDOM(html)
     root.forEach(markCodeAsPre)
-    const h = DomUtils.getOuterHTML(root, { selfClosingTags: true }).replace(/"vfm{{/g, '{{').replace(/}}vfm"/g, '}}')
+    const h = DomUtils.getOuterHTML(root, { selfClosingTags: true })
+      .replace(/"vfm{{/g, '{{')
+      .replace(/}}vfm"/g, '}}')
+      .replace(/&lt;/g, '<')
+      .replace(/&gt;/g, '>')
+      .replace(/&quot;/g, '"')
+
+    log(h)
     const reactCode = `
     const markdown =
-      <div>
+      <div className='${useOptions.wrapperClasses}'>
         ${h}
       </div>
   `
+
     const compiledReactCode = `
   function (props) {
     Object.keys(props).forEach(function (key) {
@@ -42,7 +53,6 @@ function markCodeAsPre(node: DomHandlerNode): void {
   if (node instanceof Element) {
     if (node.tagName.match(/^[A-Z].+/))
       node.tagName = `${nameSpace}.${node.tagName}`
-
     if (['pre', 'code'].includes(node.tagName) && node.attribs?.class) {
       node.attribs.className = node.attribs.class
       delete node.attribs.class

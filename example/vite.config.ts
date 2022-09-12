@@ -1,9 +1,35 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import Markdown from 'vite-plugin-react-markdown'
-
+import Shiki from 'markdown-it-shiki'
+import anchor from 'markdown-it-anchor'
+import TOC from 'markdown-it-table-of-contents'
+import { slugify } from './src/slugify'
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [Markdown(), react()],
+  plugins: [Markdown({
+    wrapperClasses: 'vite-plugin-react-markdown-test',
+    markdownItSetup(md) {
+      md.use(Shiki, {
+        theme: {
+          light: 'vitesse-light',
+          dark: 'vitesse-dark',
+        },
+      })
+
+      md.use(anchor, {
+        slugify,
+        permalink: anchor.permalink.linkInsideHeader({
+          symbol: '#',
+          renderAttrs: () => ({ 'aria-hidden': 'true' }),
+        }),
+      })
+
+      md.use(TOC, {
+        includeLevel: [1, 2, 3],
+        slugify,
+      })
+    },
+  }), react()],
 })
 

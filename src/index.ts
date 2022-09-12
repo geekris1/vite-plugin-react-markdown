@@ -1,8 +1,8 @@
-import type { Options } from './type'
 import { createFilter } from '@rollup/pluginutils'
+import type { Plugin } from 'vite'
 import { mergeOptions } from './options'
 import { createMarkdown } from './markdown'
-import type { Plugin } from 'vite'
+import type { Options } from './type'
 
 function VitePluginReactMarkdown(useOptions: Options = {}): Plugin {
   const options = mergeOptions(useOptions)
@@ -19,8 +19,8 @@ function VitePluginReactMarkdown(useOptions: Options = {}): Plugin {
         return
       try {
         return markdownToReact(raw, id)
-      } catch (e: any) { this.error(e) }
-
+      }
+      catch (e: any) { this.error(e) }
     },
   } as const
 }

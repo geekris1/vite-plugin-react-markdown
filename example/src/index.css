@@ -68,3 +68,44 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+html.dark .shiki-light {
+  display: none;
+}
+
+html:not(.dark) .shiki-dark {
+  display: none;
+}
+
+
+.table-of-contents {
+  position: fixed;
+  top: 80px;
+  padding-top: 70px;
+  font-size: 0.8em;
+  right: 10px;
+  width: 200px;
+  bottom: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+  opacity: 0.5;
+  transition: all .4s ease-out;
+}
+
+/* .table-of-contents:hover {
+  opacity: 0.5;
+} */
+
+.table-of-contents ul{
+  margin-top: 1.25em;
+  margin-bottom: 1.25em;
+  list-style-type: none;
+}
+.table-of-contents ul > li::before {
+  display: none;
+}
+
+.table-of-contents ul > li {
+  padding-left: 0.8rem;
+}
