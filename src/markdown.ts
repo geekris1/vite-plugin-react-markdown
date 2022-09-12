@@ -19,7 +19,6 @@ export function createMarkdown(useOptions: ResolvedOptions) {
     const { body } = frontMatter(raw)
     // from : https://github.com/hmsk/vite-plugin-markdown/blob/main/src/index.ts
     const html = markdown.render(body, { id })
-    // log(attributes, '1')
     const root = parseDOM(html)
     root.forEach(markCodeAsPre)
     const h = DomUtils.getOuterHTML(root, { selfClosingTags: true })
@@ -31,7 +30,6 @@ export function createMarkdown(useOptions: ResolvedOptions) {
       // handle notes
       .replace(/<!-- ---/g, '{/*')
       .replace(/--- -->/g, '*/}')
-    log(h)
     const reactCode = `
     const markdown =
       <div className='${useOptions.wrapperClasses}'>
