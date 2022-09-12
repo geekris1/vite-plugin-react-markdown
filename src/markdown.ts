@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/quotes */
 import MarkdownIt from 'markdown-it'
 import { DomUtils, parseDOM } from 'htmlparser2'
 import { Element } from 'domhandler'
@@ -7,18 +8,21 @@ import type { Node as DomHandlerNode } from 'domhandler'
 import type { ResolvedOptions } from './type'
 import { transformAttribs } from './attribs'
 import { getComponentPath } from './wrapperComponent'
-const nameSpace = 'VITE_PLUGIN_REACT_COMPONENT'
+// const nameSpace = 'VITE_PLUGIN_REACT_COMPONENT'
 export function createMarkdown(useOptions: ResolvedOptions) {
-  const markdown = new MarkdownIt({ html: true, xhtmlOut: true, ...useOptions.markdownItOptions })
+  const markdown = new MarkdownIt({ html: true, ...useOptions.markdownItOptions })
   useOptions.markdownItSetup(markdown)
 
   // use vite TransformResult build error , so use any
   return (raw: string, id: string): any => {
     const { body, attributes } = frontMatter(raw)
     const attributesString = JSON.stringify(attributes)
+    const importComponentName: string[] = []
     // from : https://github.com/hmsk/vite-plugin-markdown/blob/main/src/index.ts
-    const html = markdown.render(body, { id })
-    const root = parseDOM(html)
+    const html = markdown.render(body, { id }).replace(/&lt;/g, '<')
+      .replace(/&gt;/g, '>')
+      .replace(/&quot;/g, '"')
+    const root = parseDOM(html, { lowerCaseTags: false })
     root.forEach(markCodeAsPre)
     const h = DomUtils.getOuterHTML(root, { selfClosingTags: true })
       .replace(/"vfm{{/g, '{{')
@@ -51,37 +55,49 @@ export function createMarkdown(useOptions: ResolvedOptions) {
           </div>
       `
     }
+    let importComponent = ""
+    if (useOptions.wrapperComponent && typeof useOptions.wrapperComponent === 'object' && importComponentName.length > 0) {
+      importComponentName.forEach((componentName) => {
+        const path = useOptions.wrapperComponent![componentName]
+        if (path)
+          importComponent += `import ${componentName} from '${getComponentPath(id, path)}'\n`
+      })
+    }
 
     const compiledReactCode = `
   function (props) {
-    Object.keys(props).forEach(function (key) {
-      SubReactComponent[key] = props[key]
-    })
     ${transformSync(reactCode, { ast: false, presets: ['@babel/preset-react'] })!.code}
     return markdown
   } 
 `
-    const code = `import React from "react"\nconst ${nameSpace} = {}\n${wrapperComponent}const ReactComponent = ${compiledReactCode}\nexport default ReactComponent\nexport const attributes = ${attributesString} `
+    let code = `import React from 'react'\n`
+    code += `${wrapperComponent}`
+    code += `${importComponent}`
+    code += `const ReactComponent = ${compiledReactCode}\n`
+    code += `export default ReactComponent\n`
+    code += `export const attributes = ${attributesString}`
+
+    // const code = `import React from "react"\nconst ${nameSpace} = {}\n${wrapperComponent}const ReactComponent = ${compiledReactCode}\nexport default ReactComponent\nexport const attributes = ${attributesString} `
     return {
       code,
       map: { mappings: '' } as any,
     }
-  }
-}
+    function markCodeAsPre(node: DomHandlerNode): void {
+      if (node instanceof Element) {
+        if (node.tagName.match(/^[A-Z].+/))
+          importComponentName.push(node.tagName)
 
-function markCodeAsPre(node: DomHandlerNode): void {
-  if (node instanceof Element) {
-    if (node.tagName.match(/^[A-Z].+/))
-      node.tagName = `${nameSpace}.${node.tagName}`
-    transformAttribs(node.attribs)
-    if (node.tagName === 'code') {
-      const codeContent = DomUtils.getInnerHTML(node, { decodeEntities: true })
-      node.attribs.dangerouslySetInnerHTML = `vfm{{ __html: \`${codeContent.replace(/([\\`])/g, '\\$1')}\`}}vfm`
-      node.childNodes = []
+        transformAttribs(node.attribs)
+        if (node.tagName === 'code') {
+          const codeContent = DomUtils.getInnerHTML(node, { decodeEntities: true })
+          node.attribs.dangerouslySetInnerHTML = `vfm{{ __html: \`${codeContent.replace(/([\\`])/g, '\\$1')}\`}}vfm`
+          node.childNodes = []
+        }
+
+        if (node.childNodes.length > 0)
+          node.childNodes.forEach(markCodeAsPre)
+      }
     }
-
-    if (node.childNodes.length > 0)
-      node.childNodes.forEach(markCodeAsPre)
   }
 }
 

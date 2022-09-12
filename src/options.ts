@@ -6,6 +6,7 @@ export function resolveOptions(useOptions: Options): ResolvedOptions {
     wrapperClasses: 'vite-plugin-react-markdown',
     wrapperComponentName: 'ViteReactMarkdown',
     wrapperComponentPath: undefined,
+    wrapperComponent: undefined,
     include: null,
     exclude: null,
   }
