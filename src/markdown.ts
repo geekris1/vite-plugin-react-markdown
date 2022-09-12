@@ -2,8 +2,12 @@ import MarkdownIt from 'markdown-it'
 import { DomUtils, parseDOM } from 'htmlparser2'
 import { Element } from 'domhandler'
 import { transformSync } from '@babel/core'
+import frontMatter from 'front-matter'
+
 import type { Node as DomHandlerNode } from 'domhandler'
 import type { ResolvedOptions } from './type'
+import { transformAttribs } from './attribs'
+
 const { log } = console
 const nameSpace = 'VITE_PLUGIN_REACT_COMPONENT'
 export function createMarkdown(useOptions: ResolvedOptions) {
@@ -12,9 +16,10 @@ export function createMarkdown(useOptions: ResolvedOptions) {
 
   // use vite TransformResult build error , so use any
   return (raw: string, id: string): any => {
+    const { body } = frontMatter(raw)
     // from : https://github.com/hmsk/vite-plugin-markdown/blob/main/src/index.ts
-    const html = markdown.render(raw, { id })
-
+    const html = markdown.render(body, { id })
+    // log(attributes, '1')
     const root = parseDOM(html)
     root.forEach(markCodeAsPre)
     const h = DomUtils.getOuterHTML(root, { selfClosingTags: true })
@@ -23,7 +28,9 @@ export function createMarkdown(useOptions: ResolvedOptions) {
       .replace(/&lt;/g, '<')
       .replace(/&gt;/g, '>')
       .replace(/&quot;/g, '"')
-
+      // handle notes
+      .replace(/<!-- ---/g, '{/*')
+      .replace(/--- -->/g, '*/}')
     log(h)
     const reactCode = `
     const markdown =
@@ -53,11 +60,7 @@ function markCodeAsPre(node: DomHandlerNode): void {
   if (node instanceof Element) {
     if (node.tagName.match(/^[A-Z].+/))
       node.tagName = `${nameSpace}.${node.tagName}`
-    if (['pre', 'code'].includes(node.tagName) && node.attribs?.class) {
-      node.attribs.className = node.attribs.class
-      delete node.attribs.class
-    }
-
+    transformAttribs(node.attribs)
     if (node.tagName === 'code') {
       const codeContent = DomUtils.getInnerHTML(node, { decodeEntities: true })
       node.attribs.dangerouslySetInnerHTML = `vfm{{ __html: \`${codeContent.replace(/([\\`])/g, '\\$1')}\`}}vfm`
