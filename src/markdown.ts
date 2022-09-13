@@ -39,7 +39,10 @@ export function createMarkdown(useOptions: ResolvedOptions) {
       wrapperComponent = `import ${useOptions.wrapperComponentName} from '${componentPath}'\n`
       reactCode = `
         const markdown =
-          <${useOptions.wrapperComponentName} attributes={${attributesString}}>
+          <${useOptions.wrapperComponentName} 
+            attributes={${attributesString}}
+            importComponentName={${JSON.stringify(importComponentName)}}
+          >
             <React.Fragment>
               ${h} 
             </React.Fragment> 
