@@ -19,9 +19,7 @@ export function createMarkdown(useOptions: ResolvedOptions) {
     const attributesString = JSON.stringify(attributes)
     const importComponentName: string[] = []
     // from : https://github.com/hmsk/vite-plugin-markdown/blob/main/src/index.ts
-    const html = markdown.render(body, { id }).replace(/&lt;/g, '<')
-      .replace(/&gt;/g, '>')
-      .replace(/&quot;/g, '"')
+    const html = markdown.render(body, { id })
     const root = parseDOM(html, { lowerCaseTags: false })
     root.forEach(markCodeAsPre)
     const h = DomUtils.getOuterHTML(root, { selfClosingTags: true })
@@ -30,6 +28,7 @@ export function createMarkdown(useOptions: ResolvedOptions) {
       .replace(/&lt;/g, '<')
       .replace(/&gt;/g, '>')
       .replace(/&quot;/g, '"')
+      .replace(/&amp;/g, '&')
       // handle notes
       .replace(/<!--/g, '{/*')
       .replace(/-->/g, '*/}')
@@ -76,8 +75,6 @@ export function createMarkdown(useOptions: ResolvedOptions) {
     code += `const ReactComponent = ${compiledReactCode}\n`
     code += `export default ReactComponent\n`
     code += `export const attributes = ${attributesString}`
-
-    // const code = `import React from "react"\nconst ${nameSpace} = {}\n${wrapperComponent}const ReactComponent = ${compiledReactCode}\nexport default ReactComponent\nexport const attributes = ${attributesString} `
     return {
       code,
       map: { mappings: '' } as any,
@@ -86,14 +83,12 @@ export function createMarkdown(useOptions: ResolvedOptions) {
       if (node instanceof Element) {
         if (node.tagName.match(/^[A-Z].+/))
           importComponentName.push(node.tagName)
-
         transformAttribs(node.attribs)
         if (node.tagName === 'code') {
           const codeContent = DomUtils.getInnerHTML(node, { decodeEntities: true })
           node.attribs.dangerouslySetInnerHTML = `vfm{{ __html: \`${codeContent.replace(/([\\`])/g, '\\$1')}\`}}vfm`
           node.childNodes = []
         }
-
         if (node.childNodes.length > 0)
           node.childNodes.forEach(markCodeAsPre)
       }

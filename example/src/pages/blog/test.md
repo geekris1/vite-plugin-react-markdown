@@ -18,4 +18,5 @@ use vite
 
 ```js
 const a = 100;
+<div>111</div>;
 ```
