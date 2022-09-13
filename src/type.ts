@@ -9,7 +9,7 @@ export interface Options {
   wrapperClasses?: string
   wrapperComponentName?: string | null | undefined
   wrapperComponentPath?: string | null | undefined
-  wrapperComponent: WrapperComponent | null | undefined
+  wrapperComponent?: WrapperComponent | null | undefined
   include?: FilterPattern
   exclude?: FilterPattern
 
