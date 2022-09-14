@@ -1,7 +1,7 @@
 {
   "name": "vite-plugin-react-markdown",
   "type": "module",
-  "version": "0.0.16",
+  "version": "0.0.17",
   "packageManager": "pnpm@7.9.0",
   "description": "",
   "author": "geekris1",
@@ -44,7 +44,8 @@
     "release": "bumpp && npm publish",
     "start": "esno src/index.ts",
     "test": "vitest",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "bumpp": "bumpp"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^0.26.1",
