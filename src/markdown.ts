@@ -11,14 +11,19 @@ import { getComponentPath } from './wrapperComponent'
 // const nameSpace = 'VITE_PLUGIN_REACT_COMPONENT'
 export function createMarkdown(useOptions: ResolvedOptions) {
   const markdown = new MarkdownIt({ html: true, ...useOptions.markdownItOptions })
+
+  options.markdownItUses.forEach((e) => {
+    const [plugin, options] = toArray(e)
+    markdown.use(plugin, options)
+  })
   useOptions.markdownItSetup(markdown)
 
-  // use vite TransformResult build error , so use any
+  // use vite type <TransformResult> build error , so use any
   return (raw: string, id: string): any => {
     const { body, attributes } = frontMatter(raw)
     const attributesString = JSON.stringify(attributes)
     const importComponentName: string[] = []
-    // from : https://github.com/hmsk/vite-plugin-markdown/blob/main/src/index.ts
+    // partial transform code from : https://github.com/hmsk/vite-plugin-markdown/blob/main/src/index.ts
     const html = markdown.render(body, { id })
     const root = parseDOM(html, { lowerCaseTags: false })
     root.forEach(markCodeAsPre)
