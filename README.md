@@ -86,8 +86,8 @@ function App() {
  
   return <>
     {attributes.name} // vite-plugin-react-markdown
-   <ReactComponent />
-   	</> ;
+    <ReactComponent />
+  </> ;
 }
 
 export default App;
