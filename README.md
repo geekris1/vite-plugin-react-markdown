@@ -69,7 +69,7 @@ export default {
 
 ### attributes
 
-// .md
+
 ```
 ---
 name: vite-plugin-react-markdown
