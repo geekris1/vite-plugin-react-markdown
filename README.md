@@ -9,7 +9,7 @@
 
 ### Install
 ```bash
-// use npm 
+
 pnpm add vite-plugin-vue-markdown -D 
 ```
 ### Add `vite.config`
@@ -20,7 +20,7 @@ import Markdown from 'vite-plugin-react-markdown'
 export default {
   plugins: [
     react({
-      include: [/\.tsx$/, /\.md$/], // <--
+      include: [/\.tsx$/, /\.md$/], // <-- 添加.md
     }),
     Markdown()
   ],
