@@ -27,7 +27,7 @@ export default {
 ```
 
 ### 导入markdown作为作为React Component使用
-```js
+```react
 import ReactComponent from './vite-plugin-react-markdown-example.md';
 
 function App() {
@@ -36,7 +36,6 @@ function App() {
 
 export default App;
 ```
-
 
 
 ### 在Markdown内使用React Component
@@ -56,7 +55,7 @@ export default {
     Markdown(
     {
       // key 要跟组件名称一致 
-      // value 组件所在的路径，相对于vite.config文件所在的位置
+      // value 组件所在的路径，相对于vite.config
       "Counter":'./src/component/Counter'
     }
     ),
@@ -68,3 +67,29 @@ export default {
 ```
 
 
+### attributes
+
+事例
+```
+---
+name: vite-plugin-react-markdown
+---
+
+# Hello World
+
+```
+
+```js
+import ReactComponent , {attributes} from './vite-plugin-react-markdown-example.md';
+
+function App() {
+ 
+  return <>
+    {attributes.name} // vite-plugin-react-markdown
+   <ReactComponent />
+   	</> ;
+}
+
+export default App;
+
+```
