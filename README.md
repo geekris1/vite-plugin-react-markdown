@@ -80,16 +80,19 @@ name: vite-plugin-react-markdown
 ```
 
 ```js
-import ReactComponent , {attributes} from './vite-plugin-react-markdown-example.md';
+import React from 'react'
+import ReactComponent, { attributes, } from './vite-plugin-react-markdown-example.md';
 
 function App() {
- 
-  return <>
-    {attributes.name} // vite-plugin-react-markdown
-    <ReactComponent />
-  </> ;
+  return (
+    <React.Fragment>
+      {attributes.name}
+      <ReactComponent />
+    </React.Fragment  >
+  );
 }
 
 export default App;
+
 
 ```
