@@ -86,7 +86,7 @@ import ReactComponent, { attributes, } from './vite-plugin-react-markdown-exampl
 function App() {
   return (
     <React.Fragment>
-      {attributes.name} // vite-plugin-react-markdown
+      {attributes.name}  {/* vite-plugin-react-markdown */}
       <ReactComponent />
     </React.Fragment  >
   );
