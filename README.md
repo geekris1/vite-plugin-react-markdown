@@ -27,7 +27,7 @@ export default {
 ```
 
 ### 导入markdown作为作为React Component使用
-```react
+```js
 import ReactComponent from './vite-plugin-react-markdown-example.md';
 
 function App() {
@@ -81,7 +81,7 @@ name: vite-plugin-react-markdown
 
 ```js
 import React from 'react'
-import ReactComponent, { attributes, } from './vite-plugin-react-markdown-example.md';
+import ReactComponent, { attributes } from './vite-plugin-react-markdown-example.md';
 
 function App() {
   return (
