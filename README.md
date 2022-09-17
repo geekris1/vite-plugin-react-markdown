@@ -131,7 +131,7 @@ export default App;
 
 如果你配置了`wrapperComponentPath`，你可以自定义组件加载的名称
 
-## TypeScript Shim
+## 📖TypeScript Shim
 
 ```ts
 declare module '*.md' {
@@ -148,13 +148,13 @@ interface WrapperComponentProps {
 }
 ```
 
-## 鸣谢
+## 🌸 Thanks
 
 项目灵感来自于 [vite-plugin-vue-markdown](https://github.com/mdit-vue/vite-plugin-vue-markdown)
 
 部分代码的实现来自 [vite-plugin-markdown](https://github.com/hmsk/vite-plugin-markdown)
 
-## 作者
+## 🐼 Author
 
 [geekris1](https://github.com/geekris1)
 
