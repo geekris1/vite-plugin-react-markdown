@@ -3,7 +3,7 @@
   "type": "module",
   "version": "0.0.18",
   "packageManager": "pnpm@7.9.0",
-  "description": "",
+  "description": "Compile Markdown to React component",
   "author": "geekris1",
   "license": "MIT",
   "funding": "https://github.com/sponsors/geekris1",
@@ -13,7 +13,12 @@
     "url": "git+https://github.com/geekris1/vite-plugin-react-markdown.git"
   },
   "bugs": "https://github.com/geekris1/vite-plugin-react-markdown/issues",
-  "keywords": [],
+  "keywords": [
+    "vite",
+    "vite-plugin",
+    "react",
+    "markdown"
+  ],
   "sideEffects": false,
   "exports": {
     ".": {
