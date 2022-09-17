@@ -27,7 +27,7 @@ export default {
 ```
 
 ### 导入markdown作为作为React Component使用
-```js
+```react
 import ReactComponent from './vite-plugin-react-markdown-example.md';
 
 function App() {
@@ -81,7 +81,7 @@ name: vite-plugin-react-markdown
 
 ```js
 import React from 'react'
-import ReactComponent, { attributes } from './vite-plugin-react-markdown-example.md';
+import ReactComponent, { attributes, } from './vite-plugin-react-markdown-example.md';
 
 function App() {
   return (
@@ -96,3 +96,22 @@ export default App;
 
 
 ```
+
+## TypeScript Shim
+
+```ts
+declare module '*.md' {
+  import React from 'react'
+  const ReactComponent: React.VFC;
+  export default ReactComponent;
+  export const attributes = Record<string, any>;
+}
+
+// configured wrapperComponentPath, you will use it.
+interface WrapperComponentProps {
+  attributes: Record<string, any>
+  importComponentName: string[]
+}
+```
+
+
