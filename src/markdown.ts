@@ -4,15 +4,17 @@ import { DomUtils, parseDOM } from 'htmlparser2'
 import { Element } from 'domhandler'
 import { transformSync } from '@babel/core'
 import frontMatter from 'front-matter'
+import { toArray } from '@antfu/utils'
 import type { Node as DomHandlerNode } from 'domhandler'
 import type { ResolvedOptions } from './type'
 import { transformAttribs } from './attribs'
 import { getComponentPath } from './wrapperComponent'
+
 // const nameSpace = 'VITE_PLUGIN_REACT_COMPONENT'
 export function createMarkdown(useOptions: ResolvedOptions) {
   const markdown = new MarkdownIt({ html: true, ...useOptions.markdownItOptions })
 
-  options.markdownItUses.forEach((e) => {
+  useOptions.markdownItUses.forEach((e) => {
     const [plugin, options] = toArray(e)
     markdown.use(plugin, options)
   })

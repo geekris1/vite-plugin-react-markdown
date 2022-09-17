@@ -26,4 +26,3 @@ function VitePluginReactMarkdown(useOptions: Options = {}): Plugin {
 }
 
 export default VitePluginReactMarkdown
-
