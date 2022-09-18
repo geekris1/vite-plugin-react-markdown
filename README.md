@@ -55,7 +55,7 @@ export default {
     Markdown(
     {
       // key 要跟组件名称一致 
-      // value 组件所在的路径，相对于vite.config
+      // value 组件所在的路径，相对于根目录
       "Counter":'./src/component/Counter'
     }
     ),
