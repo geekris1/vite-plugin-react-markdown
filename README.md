@@ -125,7 +125,7 @@ export default App;
 
 > 配置这个属性，wrapperClasses将失效，你可自己给组件内自己设置className
 
-#### wrapperComponentPath
+#### wrapperComponentName
 
 默认值: `ViteReactMarkdown`
 
