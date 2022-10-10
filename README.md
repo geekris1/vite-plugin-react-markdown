@@ -1,5 +1,5 @@
 # vite-plugin-react-markdown
-[![NPM version](https://img.shields.io/npm/v/vite-plugin-react-markdown?color=a1b858)](https://www.npmjs.com/package/vite-plugin-react-markdown)
+[![NPM version](https://img.shields.io/npm/v/vite-plugin-react-markdown?color=00FFFF)](https://www.npmjs.com/package/vite-plugin-react-markdown)
 
 ## 🚀 Features
 - 将Markdown转化为React Component
@@ -27,7 +27,7 @@ export default {
 ```
 
 ### 导入markdown作为作为React Component使用
-```react
+```js
 import ReactComponent from './vite-plugin-react-markdown-example.md';
 
 function App() {
@@ -55,7 +55,7 @@ export default {
     Markdown(
     {
       // key 要跟组件名称一致 
-      // value 组件所在的路径，相对于vite.config
+      // value 组件所在的路径，相对于根目录
       "Counter":'./src/component/Counter'
     }
     ),
@@ -125,7 +125,7 @@ export default App;
 
 > 配置这个属性，wrapperClasses将失效，你可自己给组件内自己设置className
 
-#### wrapperComponentPath
+#### wrapperComponentName
 
 默认值: `ViteReactMarkdown`
 
