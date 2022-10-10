@@ -91,8 +91,9 @@ export function createMarkdown(useOptions: ResolvedOptions) {
     }
     function markCodeAsPre(node: DomHandlerNode): void {
       if (node instanceof Element) {
-        if (node.tagName.match(/^[A-Z].+/))
+        if (node.tagName.match(/^[A-Z].+/) && !importComponentName.includes(node.tagName))
           importComponentName.push(node.tagName)
+
         transformAttribs(node.attribs)
         if (node.tagName === 'code') {
           const codeContent = DomUtils.getInnerHTML(node, { decodeEntities: true })
