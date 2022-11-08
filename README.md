@@ -9,7 +9,7 @@
 
 ### 安装
 ```bash
-pnpm add vite-plugin-vue-markdown -D 
+pnpm add vite-plugin-react-markdown -D 
 ```
 ### 添加 `vite.config`
 ```ts
