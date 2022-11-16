@@ -1,3 +1,7 @@
 {
-  "extends": "@antfu"
+  "extends": "@antfu",
+  "rules": {
+    "brace-style": "off",
+    "@typescript-eslint/brace-style": "off"
+  }
 }

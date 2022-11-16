@@ -5,25 +5,25 @@ import { Element } from 'domhandler'
 import { transformSync } from '@babel/core'
 import frontMatter from 'front-matter'
 import { toArray } from '@antfu/utils'
+import type { TransformResult } from 'vite'
 import type { Node as DomHandlerNode } from 'domhandler'
 import type { ResolvedOptions } from './type'
 import { transformAttribs } from './attribs'
-import { getComponentPath } from './wrapperComponent'
-
-// const nameSpace = 'VITE_PLUGIN_REACT_COMPONENT'
+import { getComponentPath, getWrapperComponent } from './wrapperComponent'
+const { log } = console
 export function createMarkdown(useOptions: ResolvedOptions) {
   const markdown = new MarkdownIt({ html: true, ...useOptions.markdownItOptions })
-
   useOptions.markdownItUses.forEach((e) => {
     const [plugin, options] = toArray(e)
     markdown.use(plugin, options)
   })
   useOptions.markdownItSetup(markdown)
 
-  // use vite type <TransformResult> build error , so use any
-  return (raw: string, id: string): any => {
+  return async (raw: string, id: string): Promise<TransformResult> => {
     const { body, attributes } = frontMatter(raw)
     const attributesString = JSON.stringify(attributes)
+    const wrapperComponentData = await getWrapperComponent(useOptions.wrapperComponent)
+    log(wrapperComponentData)
     const importComponentName: string[] = []
     // partial transform code from : https://github.com/hmsk/vite-plugin-markdown/blob/main/src/index.ts
     const html = markdown.render(body, { id })
@@ -65,9 +65,9 @@ export function createMarkdown(useOptions: ResolvedOptions) {
       `
     }
     let importComponent = ""
-    if (useOptions.wrapperComponent && typeof useOptions.wrapperComponent === 'object' && importComponentName.length > 0) {
+    if (wrapperComponentData && typeof wrapperComponentData === 'object' && importComponentName.length > 0) {
       importComponentName.forEach((componentName) => {
-        const path = useOptions.wrapperComponent![componentName]
+        const path = wrapperComponentData![componentName]
         if (path)
           importComponent += `import ${componentName} from '${getComponentPath(id, path)}'\n`
       })
@@ -106,4 +106,3 @@ export function createMarkdown(useOptions: ResolvedOptions) {
     }
   }
 }
-

@@ -14,11 +14,11 @@ function VitePluginReactMarkdown(useOptions: Options = {}): Plugin {
   return {
     name: 'vite-plugin-react-markdown',
     enforce: 'pre',
-    transform(raw: string, id: string) {
+    async transform(raw: string, id: string) {
       if (!filter(id))
         return
       try {
-        return markdownToReact(raw, id)
+        return await markdownToReact(raw, id)
       }
       catch (e: any) { this.error(e) }
     },

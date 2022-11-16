@@ -10,9 +10,7 @@ export default defineConfig({
   plugins: [Markdown({
     wrapperClasses: 'vite-plugin-react-markdown-test',
     wrapperComponentPath: './src/components/wrapperComponent',
-    wrapperComponent: {
-      ReactTest: './src/components/ReactTest'
-    },
+    wrapperComponent: true,
     markdownItSetup(md) {
       md.use(Shiki, {
         theme: {

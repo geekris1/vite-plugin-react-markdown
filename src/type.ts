@@ -2,12 +2,11 @@ import type MarkdownIt from 'markdown-it'
 import type { FilterPattern } from '@rollup/pluginutils'
 
 /**
-   * key :componentName
-   * value: vite.config to the Component relative path
-  */
-export interface WrapperComponent {
-  [componentName: string]: string
-}
+ * key :componentName
+ * value: root directory to the Component relative path
+*/
+export interface WrapperComponentData { [name: string]: string }
+export type WrapperComponent = WrapperComponentData | boolean | string | string[] | null | undefined
 export interface Options {
   /**
    * Options passed to Markdown It
@@ -50,7 +49,7 @@ export interface Options {
    * used Component within .md file
    * @default 'ViteReactMarkdown'
    */
-  wrapperComponent?: WrapperComponent | null | undefined
+  wrapperComponent?: WrapperComponent
   include?: FilterPattern
   exclude?: FilterPattern
 
