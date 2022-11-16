@@ -39,7 +39,7 @@ export interface Options {
   wrapperComponentName?: string | null | undefined
   /**
    * Component Path to wrapper with
-   * vite.config to the Component relative path
+   * root directory to the Component relative path
    *
    * @default undefined
    */
