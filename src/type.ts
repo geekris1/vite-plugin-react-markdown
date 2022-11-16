@@ -41,13 +41,13 @@ export interface Options {
    * Component Path to wrapper with
    * vite.config to the Component relative path
    *
-   * @default 'ViteReactMarkdown'
+   * @default undefined
    */
   wrapperComponentPath?: string | null | undefined
 
   /**
    * used Component within .md file
-   * @default 'ViteReactMarkdown'
+   * @default undefined
    */
   wrapperComponent?: WrapperComponent
   include?: FilterPattern
