@@ -8,15 +8,15 @@
 
 ## 🚀 Features
 
-- 将 Markdown 转化为 React Component
-- 再 Markdown 中使用 React Component
+- Use Markdown as React Component
+- Use React Component in Markdown
 
 ## 🔧 Usage
 
-### 安装
+### Install
 
 ```bash
-pnpm add vite-plugin-react-markdown -D
+pnpm add vite-plugin-react-markdown -D # npm i vite-plugin-react-markdown -D / yarn add vite-plugin-react-markdown -D
 ```
 
 ### 添加 `vite.config`
