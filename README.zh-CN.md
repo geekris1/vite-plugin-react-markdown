@@ -1,9 +1,9 @@
 # vite-plugin-react-markdown
 
 <p align='center'>
-<b>English</b> | <a href="https://github.com/geekris1/vite-plugin-react-markdown/blob/master/README.zh-CN.md">简体中文</a>
+<a href="https://github.com/geekris1/vite-plugin-react-markdown/blob/master/README.md">English</a>|<b>简体中文</b>    
+<!-- Contributors: Thanks for getting interested, however we DON'T accept new transitions to the README, thanks. -->
 </p>
-
 [![NPM version](https://img.shields.io/npm/v/vite-plugin-react-markdown?color=00FFFF)](https://www.npmjs.com/package/vite-plugin-react-markdown)
 
 ## 🚀 Features
