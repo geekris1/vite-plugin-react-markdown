@@ -1,8 +1,5 @@
-> The current document is 0.1.X, The latest 0.2.x document is being updated.... It is expected to be finished China Standard Time 11/17. English documents will also be added (from Google Translate)
-
-> 当前文档是0.1.X，最新的0.2.X 版本正在更新... 预计今天完成。英文文档也将被添加 
-
 # vite-plugin-react-markdown
+
 [![NPM version](https://img.shields.io/npm/v/vite-plugin-react-markdown?color=00FFFF)](https://www.npmjs.com/package/vite-plugin-react-markdown)
 
 ## 🚀 Features
@@ -41,56 +38,87 @@ function App() {
 export default App;
 ```
 
-
 ### 在Markdown内使用React Component
 
+> 使用此功能请确保你的组件使用的 export default导出 ，而不是 export Component 。
+>
+> 同时没有重名的组件。
+
+首先你需要配置`wrapperComponent`，你可以设置为`true`，这样所有的的组件都可以在md文件里使用(这也将带来一定的性能问题)。
+
+
+```ts
+// vite.config
+// 其他代码省略
+Markdown({
+  wrapperComponent:true
+})
+```
+
+你也可以设置为`src/**/*.{jsx,tsx}`，这样只读取src文件内的组件。 
+
+```ts
+Markdown({
+  wrapperComponent:'src/**/*.{jsx,tsx}'
+})
+```
+
+如果你想取多个不同文件夹的组件可以传一个数组。
+
+```ts
+Markdown({
+  wrapperComponent:'src/**/*.{jsx,tsx}'
+})
+```
+如果你想取多个不同文件夹的组件可以传一个数组。
+
+```ts
+Markdown({
+  wrapperComponent:['src/**/*.{jsx,tsx}','other/**/*.{jsx,tsx}']
+})
+```
+
+如果你追求极致的性能也可以指定要加载哪些组件。
+
+需要传递一个对象，key为组件的名称，value为相对于根目录的路径
+
+```ts
+Markdown({
+  wrapperComponent:{Counter:"src/component/Counter/Counter.tsx"}
+})
+```
+
+完成配置后，你就可以再md文件内直接使用对用的组件了
+
+> 如果不是指定的组件，对用的组件名称是其路径名
+>
+> 如: src/component/`Counter.tsx` , 其组件名为`Counte` （如果首字母是小写，会转化为大写）
+
 ```react
+# 一个加载组件的例子
 <Counter/>
 ```
-
-同时需要添加`options`的配置
-
-```ts {5,7}
-import react from '@vitejs/plugin-react'
-import Markdown from 'vite-plugin-react-markdown'
-
-export default {
-  plugins: [
-    Markdown(
-    {
-      // key 要跟组件名称一致 
-      // value 组件所在的路径，相对于根目录
-      "Counter":'./src/component/Counter'
-    }
-    ),
-    react({
-      include: [/\.tsx$/, /\.md$/], // <-- 添加.md
-    })
-  ],
-}
-```
-
 
 ### attributes
 
 
-```
+```ts
+// vite-plugin-react-markdown-example.md
 ---
-name: vite-plugin-react-markdown
+title: vite-plugin-react-markdown
 ---
 
 # Hello World
 
-```
-
-```js
+// example.tsx
 import React from 'react'
-import ReactComponent, { attributes, } from './vite-plugin-react-markdown-example.md';
+// 额外导入 attributes
+import ReactComponent, { attributes } from './vite-plugin-react-markdown-example.md';
 
 function App() {
   return (
     <React.Fragment>
-      {attributes.name}  {/* vite-plugin-react-markdown */}
+      {attributes.title} {/* attributes.name的值是vite-plugin-react-markdown */}
       <ReactComponent />
     </React.Fragment  >
   );
@@ -98,6 +126,42 @@ function App() {
 
 export default App;
 
+
+```
+
+### 用一个组件处理所有markdown文件
+
+当我想给所有组件添加attributes.title时,你可以设置`wrapperComponentPath`
+
+首先添加vite.config配置
+
+```ts
+Markdown({
+  wrapperComponent:{Counter:"src/component/Counter/Counter.tsx"},
+  wrapperComponentPath: 'src/component/Page'
+})
+```
+
+```tsx
+// src/component/Page
+import type { ReactNode } from "react";
+import React from "react";
+
+interface Props {
+  attributes: Record<string, any>;
+  children: ReactNode;
+}
+// props中将包含attributes
+function Page(props: Props) {
+  const { children, attributes } = props;
+  return (
+    <React.Fragment>
+      <h1>{attributes.name}</h1>
+      {children}
+    </React.Fragment>
+  );
+}
+export default Page;
 
 ```
 
@@ -161,4 +225,3 @@ interface WrapperComponentProps {
 ## 🐼 Author
 
 [geekris1](https://github.com/geekris1)
-
