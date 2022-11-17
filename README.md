@@ -191,15 +191,15 @@ By default, you will use a `div` to wrap the markdown content, where you can set
 
 #### wrapperComponentPath
 
-你也可以使用一个组件来包裹 markdown 内容，请输入相对于根目录的组件路径
+You can also use a component to wrap the markdown content. Please enter the component path relative to the root directory.
 
-> 配置这个属性，wrapperClasses 将失效，你可自己给组件内自己设置 className
+> Configure this property, `wrapperClasses` will expire. You can set className yourself in the component.
 
 #### wrapperComponentName
 
-默认值: `ViteReactMarkdown`
+default : `ViteReactMarkdown`
 
-如果你配置了`wrapperComponentPath`，你可以自定义组件加载的名称
+If you configure `wrapperComponentPath`, you can customize the name of component loading.
 
 ## 📖TypeScript Shim
 
@@ -220,9 +220,9 @@ interface WrapperComponentProps {
 
 ## 🌸 Thanks
 
-项目灵感来自于 [vite-plugin-vue-markdown](https://github.com/mdit-vue/vite-plugin-vue-markdown)
+The project is inspired by [vite-plugin-vue-markdown](https://github.com/mdit-vue/vite-plugin-vue-markdown)
 
-部分代码的实现来自 [vite-plugin-markdown](https://github.com/hmsk/vite-plugin-markdown)
+Some of the code is implemented from [vite-plugin-markdown](https://github.com/hmsk/vite-plugin-markdown)
 
 ## 🐼 Author
 
