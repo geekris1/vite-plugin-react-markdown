@@ -16,7 +16,9 @@
 ### Install
 
 ```bash
-pnpm add vite-plugin-react-markdown -D # npm i vite-plugin-react-markdown -D / yarn add vite-plugin-react-markdown -D
+pnpm add vite-plugin-react-markdown -D 
+# npm i vite-plugin-react-markdown -D 
+# yarn add vite-plugin-react-markdown -D
 ```
 
 ### 添加 `vite.config`
