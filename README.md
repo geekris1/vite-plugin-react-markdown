@@ -170,6 +170,8 @@ export default Page;
 
 ### Options
 
+> For details, you can check [tsdoc](https://github.com/geekris1/vite-plugin-react-markdown/blob/master/src/type.ts).
+
 #### markdownItOptions
 
 `vite-plugin-react-markdown` uses markdown-it under the hood, see [`markdown-it`'s docs](https://markdown-it.github.io/markdown-it/) for more details
