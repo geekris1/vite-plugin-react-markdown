@@ -1,4 +1,4 @@
->>> The current document is 0.1.0. X, latest 0.2. The X version is being updated... It is expected to be finished today. English documents will also be added (from Google Translate)
+> The current document is 0.1.0. X, latest 0.2. The X version is being updated... It is expected to be finished today. English documents will also be added (from Google Translate)
 
 # vite-plugin-react-markdown
 [![NPM version](https://img.shields.io/npm/v/vite-plugin-react-markdown?color=00FFFF)](https://www.npmjs.com/package/vite-plugin-react-markdown)
