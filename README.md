@@ -1,3 +1,5 @@
+> The following is based on a Chinese document that was translated using Google Translate
+
 # vite-plugin-react-markdown
 
 <p align='center'>
@@ -21,7 +23,7 @@ pnpm add vite-plugin-react-markdown -D
 # yarn add vite-plugin-react-markdown -D
 ```
 
-### 添加 `vite.config`
+### Add it to `vite.config`
 
 ```ts
 import react from "@vitejs/plugin-react";
@@ -31,7 +33,7 @@ export default {
   plugins: [
     Markdown(),
     react({
-      include: [/\.tsx$/, /\.md$/], // <-- 添加.md
+      include: [/\.tsx$/, /\.md$/], // <-- add .md 
     }),
   ],
 };
