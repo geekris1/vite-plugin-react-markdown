@@ -57,7 +57,7 @@ export default App;
 >
 > Components that do not have the same name。
 
-First of all, you need to configure 'wrapperComponent', and you can set it to 'true', so that all components can be used in md files (this will also cause some performance problems).
+first of all, you need to configure `wrapperComponent`, and you can set it to `true`, so that all components can be used in md files (this will also cause some performance problems).
 
 ```ts
 // vite.config
@@ -67,7 +67,7 @@ Markdown({
 });
 ```
 
-You can also set it to `src/**/*.{jsx,tsx}` to read only the components in the src file.
+you can also set it to `src/**/*.{jsx,tsx}` to read only the components in the src file.
 
 ```ts
 Markdown({
@@ -75,15 +75,7 @@ Markdown({
 });
 ```
 
-如果你想取多个不同文件夹的组件可以传一个数组。
-
-```ts
-Markdown({
-  wrapperComponent: "src/**/*.{jsx,tsx}",
-});
-```
-
-如果你想取多个不同文件夹的组件可以传一个数组。
+if you want to take components of multiple different folders, you can send an array.
 
 ```ts
 Markdown({
@@ -91,9 +83,9 @@ Markdown({
 });
 ```
 
-如果你追求极致的性能也可以指定要加载哪些组件。
+if you pursue the ultimate performance, you can also specify which components to load.
 
-需要传递一个对象，key 为组件的名称，value 为相对于根目录的路径
+you need to pass an object, the key is the name of the component, and the value is the path relative to the root directory.
 
 ```ts
 Markdown({
@@ -101,14 +93,14 @@ Markdown({
 });
 ```
 
-完成配置后，你就可以再 md 文件内直接使用对用的组件了
+After the configuration is completed, you can use the right components directly in the md file.
 
-> 如果不是指定的组件，对用的组件名称是其路径名
+> If the component is not specified, the name of the component used is its path name.
 >
-> 如: src/component/`Counter.tsx` , 其组件名为`Counte` （如果首字母是小写，会转化为大写）
+> For example: src/component/`Counter.tsx` , The component is called `Counte` （If the initials are lowercase, they will be converted to uppercase.）
 
 ```react
-# 一个加载组件的例子
+# An example of loading components
 <Counter/>
 ```
 
@@ -124,7 +116,7 @@ title: vite-plugin-react-markdown
 
 // example.tsx
 import React from 'react'
-// 额外导入 attributes
+// import attributes
 import ReactComponent, { attributes } from './vite-plugin-react-markdown-example.md';
 
 function App() {
@@ -141,11 +133,11 @@ export default App;
 
 ```
 
-### 用一个组件处理所有 markdown 文件
+### Process all markdown files with one component
 
-当我想给所有组件添加 attributes.title 时,你可以设置`wrapperComponentPath`
+When I want to add attributes.title to all components , you need to set up `wrapperComponentPath`
 
-首先添加 vite.config 配置
+add vite.config Configuration
 
 ```ts
 Markdown({
@@ -163,7 +155,7 @@ interface Props {
   attributes: Record<string, any>;
   children: ReactNode;
 }
-// props中将包含attributes
+// props will contain attributes
 function Page(props: Props) {
   const { children, attributes } = props;
   return (
@@ -180,23 +172,22 @@ export default Page;
 
 #### markdownItOptions
 
-`vite-plugin-react-markdown` 使用 `markdown-it`,你可在这使用`markdown-it`的配置
+`vite-plugin-react-markdown` uses markdown-it under the hood, see [`markdown-it`'s docs](https://markdown-it.github.io/markdown-it/) for more details
 
-具体可参考[markdown-it 中文文档](https://markdown-it.docschina.org/#%E7%94%A8%E6%B3%95%E7%A4%BA%E4%BE%8B)
 
 #### markdownItSetup
 
-传递一个函数，它将收到`markdown-it`的实例，你可以在这添加插件
+Pass a function that will receive an instance of 'markdown-it', where you can add a plugin.
 
 #### markdownItUses
 
-添加`markdown-it`的插件
+add `markdown-it` plugin
 
 #### wrapperClasses
 
-默认值: `vite-plugin-react-markdown`
+default : `vite-plugin-react-markdown`
 
-默认会使用一个`div`将 markdown 内容包裹，你可在这设置这个 div 得 className
+By default, you will use a `div` to wrap the markdown content, where you can set this div to get className.
 
 #### wrapperComponentPath
 
