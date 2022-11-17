@@ -39,7 +39,7 @@ export default {
 };
 ```
 
-### 导入 markdown 作为作为 React Component 使用
+### import Markdown as React Component 
 
 ```js
 import ReactComponent from "./vite-plugin-react-markdown-example.md";
@@ -51,23 +51,23 @@ function App() {
 export default App;
 ```
 
-### 在 Markdown 内使用 React Component
+### use React Component inside Markdown
 
-> 使用此功能请确保你的组件使用的 export default 导出 ，而不是 export Component 。
+> Use this feature to make sure your Component uses the `export default` export instead of the `export Component`. 。
 >
-> 同时没有重名的组件。
+> Components that do not have the same name。
 
-首先你需要配置`wrapperComponent`，你可以设置为`true`，这样所有的的组件都可以在 md 文件里使用(这也将带来一定的性能问题)。
+First of all, you need to configure 'wrapperComponent', and you can set it to 'true', so that all components can be used in md files (this will also cause some performance problems).
 
 ```ts
 // vite.config
-// 其他代码省略
+// other code omitted
 Markdown({
   wrapperComponent: true,
 });
 ```
 
-你也可以设置为`src/**/*.{jsx,tsx}`，这样只读取 src 文件内的组件。
+You can also set it to `src/**/*.{jsx,tsx}` to read only the components in the src file.
 
 ```ts
 Markdown({
