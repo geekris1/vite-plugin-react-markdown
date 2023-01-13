@@ -2,7 +2,6 @@
 
 <p align='center'>
 <a href="https://github.com/geekris1/vite-plugin-react-markdown/blob/master/README.md">English</a>|<b>简体中文</b>    
-<!-- Contributors: Thanks for getting interested, however we DON'T accept new transitions to the README, thanks. -->
 </p>
 
 [![NPM version](https://img.shields.io/npm/v/vite-plugin-react-markdown?color=00FFFF)](https://www.npmjs.com/package/vite-plugin-react-markdown)
@@ -17,7 +16,9 @@
 ### 安装
 
 ```bash
-pnpm add vite-plugin-react-markdown -D
+pnpm add vite-plugin-react-markdown -D 
+# npm i vite-plugin-react-markdown -D 
+# yarn add vite-plugin-react-markdown -D
 ```
 
 ### 添加 `vite.config`
