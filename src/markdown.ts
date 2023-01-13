@@ -10,7 +10,6 @@ import type { Node as DomHandlerNode } from 'domhandler'
 import type { ResolvedOptions } from './type'
 import { transformAttribs } from './attribs'
 import { getComponentPath, getWrapperComponent } from './wrapperComponent'
-const { log } = console
 export function createMarkdown(useOptions: ResolvedOptions) {
   const markdown = new MarkdownIt({ html: true, ...useOptions.markdownItOptions })
   useOptions.markdownItUses.forEach((e) => {
@@ -23,7 +22,6 @@ export function createMarkdown(useOptions: ResolvedOptions) {
     const { body, attributes } = frontMatter(raw)
     const attributesString = JSON.stringify(attributes)
     const wrapperComponentData = await getWrapperComponent(useOptions.wrapperComponent)
-    log(wrapperComponentData)
     const importComponentName: string[] = []
     // partial transform code from : https://github.com/hmsk/vite-plugin-markdown/blob/main/src/index.ts
     const html = markdown.render(body, { id })
