@@ -1,86 +1,86 @@
 {
-  "name": "vite-plugin-react-markdown",
-  "type": "module",
-  "version": "0.2.5",
-  "packageManager": "pnpm@7.9.0",
-  "description": "Compile Markdown to React component",
-  "author": "geekris1",
-  "license": "MIT",
-  "funding": "https://github.com/sponsors/geekris1",
-  "homepage": "https://github.com/geekris1/vite-plugin-react-markdown#readme",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/geekris1/vite-plugin-react-markdown.git"
-  },
-  "bugs": "https://github.com/geekris1/vite-plugin-react-markdown/issues",
-  "keywords": [
-    "vite",
-    "vite-plugin",
-    "react",
-    "markdown"
-  ],
-  "sideEffects": false,
-  "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "require": "./dist/index.cjs",
-      "import": "./dist/index.mjs"
+    "name": "vite-plugin-react-markdown",
+    "type": "module",
+    "version": "0.2.6-beta.1",
+    "packageManager": "pnpm@7.9.0",
+    "description": "Compile Markdown to React component",
+    "author": "geekris1",
+    "license": "MIT",
+    "funding": "https://github.com/sponsors/geekris1",
+    "homepage": "https://github.com/geekris1/vite-plugin-react-markdown#readme",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/geekris1/vite-plugin-react-markdown.git"
+    },
+    "bugs": "https://github.com/geekris1/vite-plugin-react-markdown/issues",
+    "keywords": [
+        "vite",
+        "vite-plugin",
+        "react",
+        "markdown"
+    ],
+    "sideEffects": false,
+    "exports": {
+        ".": {
+            "types": "./dist/index.d.ts",
+            "require": "./dist/index.cjs",
+            "import": "./dist/index.mjs"
+        }
+    },
+    "main": "./dist/index.mjs",
+    "module": "./dist/index.mjs",
+    "types": "./dist/index.d.ts",
+    "typesVersions": {
+        "*": {
+            "*": [
+                "./dist/*",
+                "./dist/index.d.ts"
+            ]
+        }
+    },
+    "files": [
+        "dist"
+    ],
+    "scripts": {
+        "build": "unbuild",
+        "dev": "unbuild --stub",
+        "lint": "eslint .",
+        "prepublishOnly": "nr build",
+        "release": "bumpp && npm publish",
+        "start": "esno src/index.ts",
+        "test": "vitest",
+        "typecheck": "tsc --noEmit",
+        "bumpp": "bumpp"
+    },
+    "devDependencies": {
+        "@antfu/eslint-config": "^0.26.1",
+        "@antfu/ni": "^0.17.2",
+        "@types/babel__core": "^7.1.19",
+        "@types/markdown-it": "^12.2.3",
+        "@types/node": "^18.7.5",
+        "bumpp": "^8.2.1",
+        "eslint": "^8.22.0",
+        "esno": "^0.16.3",
+        "pnpm": "^7.9.0",
+        "rimraf": "^3.0.2",
+        "rollup": "^2.79.0",
+        "typescript": "^4.7.4",
+        "unbuild": "^0.8.8",
+        "vite": "^3.0.7",
+        "vitest": "^0.22.0"
+    },
+    "peerDependencies": {
+        "vite": "^2.0.0 || ^4.3"
+    },
+    "dependencies": {
+        "@antfu/utils": "^0.5.2",
+        "@babel/core": "^7.19.0",
+        "@babel/preset-react": "^7.18.6",
+        "@rollup/pluginutils": "^4.2.1",
+        "domhandler": "^5.0.3",
+        "fast-glob": "^3.2.12",
+        "front-matter": "^4.0.2",
+        "htmlparser2": "^8.0.1",
+        "markdown-it": "^13.0.1"
     }
-  },
-  "main": "./dist/index.mjs",
-  "module": "./dist/index.mjs",
-  "types": "./dist/index.d.ts",
-  "typesVersions": {
-    "*": {
-      "*": [
-        "./dist/*",
-        "./dist/index.d.ts"
-      ]
-    }
-  },
-  "files": [
-    "dist"
-  ],
-  "scripts": {
-    "build": "unbuild",
-    "dev": "unbuild --stub",
-    "lint": "eslint .",
-    "prepublishOnly": "nr build",
-    "release": "bumpp && npm publish",
-    "start": "esno src/index.ts",
-    "test": "vitest",
-    "typecheck": "tsc --noEmit",
-    "bumpp": "bumpp"
-  },
-  "devDependencies": {
-    "@antfu/eslint-config": "^0.26.1",
-    "@antfu/ni": "^0.17.2",
-    "@types/babel__core": "^7.1.19",
-    "@types/markdown-it": "^12.2.3",
-    "@types/node": "^18.7.5",
-    "bumpp": "^8.2.1",
-    "eslint": "^8.22.0",
-    "esno": "^0.16.3",
-    "pnpm": "^7.9.0",
-    "rimraf": "^3.0.2",
-    "rollup": "^2.79.0",
-    "typescript": "^4.7.4",
-    "unbuild": "^0.8.8",
-    "vite": "^3.0.7",
-    "vitest": "^0.22.0"
-  },
-  "peerDependencies": {
-    "vite": "^2.0.0 || ^3.0.0-0"
-  },
-  "dependencies": {
-    "@antfu/utils": "^0.5.2",
-    "@babel/core": "^7.19.0",
-    "@babel/preset-react": "^7.18.6",
-    "@rollup/pluginutils": "^4.2.1",
-    "domhandler": "^5.0.3",
-    "fast-glob": "^3.2.12",
-    "front-matter": "^4.0.2",
-    "htmlparser2": "^8.0.1",
-    "markdown-it": "^13.0.1"
-  }
 }
