@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/quotes */
 import path from 'path'
 import { cwd } from 'process'
 import { isObject } from '@antfu/utils'
@@ -55,6 +56,8 @@ function initialUpperCase(str: string): string {
 export function getComponentPath(markdownPath: string, componentPath: string): string {
   if (!path.isAbsolute(componentPath))
     componentPath = path.resolve(c, componentPath)
-  const t = path.relative(path.dirname(markdownPath), componentPath)
-  return t.startsWith('.') ? t : `./${t}`
+  const relPath = path.relative(path.dirname(markdownPath), componentPath)
+  const fixedPath = relPath.startsWith(".") ? relPath : `./${relPath}`
+  const finalPath = fixedPath.replace(/\\/g, "/") // for multi-platform support, use slashes
+  return finalPath
 }
