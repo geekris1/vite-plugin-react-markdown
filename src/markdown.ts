@@ -30,8 +30,6 @@ export function createMarkdown(useOptions: ResolvedOptions) {
     const h = DomUtils.getOuterHTML(root, { selfClosingTags: true })
       .replace(/"vfm{{/g, '{{')
       .replace(/}}vfm"/g, '}}')
-      .replace(/&lt;/g, '<')
-      .replace(/&gt;/g, '>')
       .replace(/&quot;/g, '"')
       .replace(/&amp;/g, '&')
       // handle notes
