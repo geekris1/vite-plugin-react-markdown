@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/quotes */
 import MarkdownIt from 'markdown-it'
 import { DomUtils, parseDOM } from 'htmlparser2'
-import { Element } from 'domhandler'
+import { Element, Text } from 'domhandler'
 import { transformSync } from '@babel/core'
 import frontMatter from 'front-matter'
 import { toArray } from '@antfu/utils'
@@ -12,6 +12,9 @@ import { transformAttribs } from './attribs'
 import { getComponentPath, getWrapperComponent } from './wrapperComponent'
 export function createMarkdown(useOptions: ResolvedOptions) {
   const markdown = new MarkdownIt({ html: true, ...useOptions.markdownItOptions })
+  // < will be compiled into <blockquote></blockquote>
+  // so need disable
+  markdown.disable('blockquote')
   useOptions.markdownItUses.forEach((e) => {
     const [plugin, options] = toArray(e)
     markdown.use(plugin, options)
@@ -100,6 +103,14 @@ export function createMarkdown(useOptions: ResolvedOptions) {
         }
         if (node.childNodes.length > 0)
           node.childNodes.forEach(markCodeAsPre)
+      }
+
+      if (node instanceof Text) {
+        if (node.type === 'text') {
+          // .replace(/&lt;/g, '<')
+          // .replace(/&gt;/g, '>')
+          node.data = node.data.replace(/</g, '&lt;').replace(/>/g, '&gt;')
+        }
       }
     }
   }

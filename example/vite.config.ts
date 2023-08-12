@@ -5,6 +5,7 @@ import Shiki from 'markdown-it-shiki'
 import anchor from 'markdown-it-anchor'
 import TOC from 'markdown-it-table-of-contents'
 import { slugify } from './src/slugify'
+import Inspect from 'vite-plugin-inspect'
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [Markdown({
@@ -32,6 +33,6 @@ export default defineConfig({
         slugify,
       })
     },
-  }), react()],
+  }), Inspect(), react()],
 })
 
